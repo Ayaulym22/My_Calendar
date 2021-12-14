@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Schedule.Models.CategoryTask>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<h2>Filterable Table</h2>
+<p>Type something in the input field to search the table for category names:</p>
+<input id="myInput" type="text" placeholder="Search..">
+<br>
+<br>
+
+<table>
+    <thead>
+        <tr>
+            <th>Category Name</th>
+            <th>Operations</th>
+        </tr>
+    </thead>
+    <tbody id="myTable">
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Category_Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Category_Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Category_Id })
+                </td>
+            </tr>
+        }
+        </tbody>
+</table>

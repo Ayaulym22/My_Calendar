@@ -1,0 +1,224 @@
+﻿@model IEnumerable<Schedule.Models.Task>
+
+@{
+    ViewBag.Title = "Index";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    * {
+        outline: 0px !important;
+        -webkit-appearance: none;
+    }
+    /* ---------------------------
+  MAIN CONTAINER
+ ----------------------------- */
+    #main-container {
+        width: 35%;
+        margin-top: 40px;
+        height: 580px;
+        box-shadow: 10px 90px 50px;
+    }
+    /* ---------------------------
+    HEADER PANEL
+ ----------------------------- */
+    #heading-panel {
+        height: 280px;
+        width: 100%;
+        padding-top: 30px;
+        color: #ffffff;
+        text-align: center;
+        background-color: #7f8fae;
+    }
+    /* ---------------------------
+    WORK DURATION PANEL 
+ ----------------------------- */
+
+    .panel-2 {
+        height: 100px;
+        width: 100%;
+    }
+
+    #work-duration {
+        text-align: center;
+        width: 100%;
+        padding: 10px;
+        background-color: #dadaff;
+        color: #ffffff;
+    }
+    /* ---------------------------
+    BREAK DURATION PANEL 
+ ----------------------------- */
+    #break-duration {
+        text-align: center;
+        width: 100%;
+        padding: 10px;
+        background-color: #dadaff;
+        color: #ffffff;
+    }
+    /* ---------------------------
+    BUTTON PANEL
+ ----------------------------- */
+    #button-panel {
+        text-align: center;
+        background-color: #fffcd3;
+        height: auto;
+        width: 100%;
+    }
+
+    .btn {
+        background-color: transparent;
+        text-transform: uppercase;
+        border: none;
+        color: #6d7797;
+        font-size: 1em;
+    }
+
+    .upperpanelBtn {
+        height: 50px;
+        font-size: 30px;
+    }
+
+        .upperpanelBtn:hover {
+            background-color: #fc5d66;
+        }
+    /* ---------------------------
+    TIMER PANEL
+ ----------------------------- */
+    #timer-panel {
+        background-color: #fc5d66;
+        color: #ffffff;
+        height: 270px;
+        width: 100%;
+        text-align: center;
+        padding: 20px;
+    }
+
+    #showtime {
+        font-size: 40px;
+    }
+</style>
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<h2>Filterable Table</h2>
+<p>Type something in the input field to search the table for category names:</p>
+<input id="myInput" type="text" placeholder="Search..">
+<br>
+<br>
+
+<table>
+    <thead>
+        <tr>
+            <th>Category Task </th>
+            <th>Notify Date</th>
+            <th>Task Name</th>
+            <th>Description</th>
+            <th>Deadline</th>
+            <th>Image Path</th>
+            <th>Completed</th>
+            <th>Operations</th>
+        </tr>
+    </thead>
+    <tbody id="myTable">
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryTask.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Notification.Notify_date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Task_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Deadline)
+                </td>
+                <td>
+
+                    <img src="@Url.Content(item.ImagePath==null?"https://pbs.twimg.com/media/ES0KUQiXYAUOpG9.jpg":item.ImagePath)" width="200" height="200" class="avatar img-circle" style="margin-bottom:15px;" alt="avatar">
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Completed)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Task_id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Task_id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Task_id })
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+<div class="container" id="main-container">
+    <div class="row">
+        <div class="col-xs-12" id="heading-panel">
+            <!-- main heading -->
+            <h3> Pomodoro </h3>
+            <i class="fa fa-clock-o fa-5x" aria-hidden="true"></i>
+        </div>
+        <!-- end of xs-12 -->
+        <!-- Work Section -->
+        <div class="col-xs-12" id="work-duration">
+            <h7> Work Duration </h7>
+            <button class="btn btn-default upperpanelBtn" id="addWorkButton">+</button>
+            <h7 id="work-display">25</h7>
+            <button class="btn btn-default upperpanelBtn" id="minusWorkButton">-</button>
+        </div>
+        <!-- end of xs-12 -->
+        <!-- Break Div -->
+        <div class="col-xs-12" id="break-duration">
+            <h7> Break Duration </h7>
+            <button class="btn btn-default upperpanelBtn" id="addBreakButton"> + </button>
+            <h7 id="break-display">5</h7>
+            <button class="btn btn-default upperpanelBtn" id=minusBreakButton> - </button>
+        </div>
+        <!-- end of xs-12 -->
+        <!-- Start, Pause and Stop Buttons -->
+        <div class="col-xs-12" id="button-panel">
+            <button type="button" class="btn btn-success" id="start" onclick="start()">Start </button>
+            <button type="button" class="btn btn-warning" id="pause" onclick="pause()">Pause</button>
+            <button type="button" class="btn btn-danger" id="resume" onclick="resume()">
+                Resume
+            </button>
+            <button type="button" class="btn btn-danger" id="reset" onclick="reset()">
+                Reset
+            </button>
+        </div>
+        <!-- end of xs-12 -->
+        <!-- Timer Div -->
+        <div class="col-xs-12" id="timer-panel">
+            <span id="showtime"> </span>
+        </div>
+        <!-- end of xs-12 -->
+    </div>
+    <!-- end of row -->
+</div>
+@section  Scripts
+    {
+    <script src="~/Content/js/bootstrap.js">
+
+    </script>
+    <script src="~/Content/js/bootstrap.min.js">
+
+    </script>
+    <script src="~/Content/js/jquery.js">
+
+    </script>
+    <script src="~/Content/js/main.js">
+
+    </script>
+    <script src="~/Content/js/tether.min.js">
+
+    </script>
+}
+

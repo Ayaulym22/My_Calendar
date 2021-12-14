@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Schedule.Models.Event>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<h2>Filterable Table</h2>
+<p>Type something in the input field to search the table for category names:</p>
+<input id="myInput" type="text" placeholder="Search..">
+<br>
+<br>
+
+<table>
+   
+    <thead>
+        <tr>
+            <th>Notify Date</th>
+            <th>Organization Name</th>
+            <th>Subject</th>
+            <th>Description</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Theme Color:</th>
+            <th>Is Full Day</th>
+            <th>Operations</th>
+        </tr>
+    </thead>
+    <tbody id="myTable">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Notification.Notify_date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Organization.Org_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Subject)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Start)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.End)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TherneColor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsFullDay)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Event_id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Event_id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Event_id })
+                </td>
+            </tr>
+        }
+        </tbody>
+</table>

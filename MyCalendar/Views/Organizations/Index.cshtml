@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Schedule.Models.Organization>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<h2>Filterable Table</h2>
+<p>Type something in the input field to search the table for category names:</p>
+<input id="myInput" type="text" placeholder="Search..">
+<br>
+<br>
+
+<table>
+    <thead>
+        <tr>
+            <th>Organization Name</th>
+            <th>Organization Information</th>
+            <th>Address</th>
+            <th>Name of Organizer</th>
+            <th>Operations</th>
+        </tr>
+    </thead>
+    <tbody id="myTable">
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Org_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Org_information)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name_organizer)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Org_id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Org_id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Org_id })
+                </td>
+            </tr>
+        }
+
+</table>
